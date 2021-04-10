@@ -1,0 +1,96 @@
+
+
+img{
+    max-width:500px;;
+    max-height: 500px;
+    display: block;
+}
+
+#gt0{
+  background-image: url('pexels-pixabay-40568.jpg');
+  height: 100%;
+  height: 100%;
+
+/* Center and scale the image nicely */
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+}
+
+#gt1{
+  margin-right: 60%;
+  background-color: #e9ebf0;
+}
+
+#gt2{
+
+}
+
+#gt3{
+  position: relative;
+  bottom: 40px;;
+}
+
+#gt4{
+  position: relative;
+  bottom: 20px;
+}
+
+#gt5{
+  margin-top: 4%;
+}
+
+#bd0{
+  background-image: url('pexels-negative-space-48604.jpg');
+  height: 100%;
+
+
+/* Center and scale the image nicely */
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+}
+
+#re0{
+  background-image: url('stethoscope-840125_1920.jpg');
+  height: 50%;
+
+
+/* Center and scale the image nicely */
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+}
+
+#re1{
+  margin-right: 40%;
+  background-color: #a0a2a8;
+}
+
+#re2{
+  position: relative;
+  bottom: 30px;
+}
+
+#re4{
+padding-left:18%;
+font-size: 40px;
+}
+
+#image_pic{
+  max-width:500px;
+  display: block;
+}
+.form-control{
+  margin-bottom: 3%;
+}
+
+#badaboo{
+  background-image: url('stethoscope-840125_1920.jpg');
+  height: 50%;
+}
+
+#up1{
+  margin-right: 40%;
+  background-color: #e9ebf0;
+}
