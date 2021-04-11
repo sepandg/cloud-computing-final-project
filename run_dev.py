@@ -35,9 +35,9 @@ def find_class(file_name):
     images = np.vstack([X])
     val = loaded_model.predict(images)
     if val ==0:
-        return('bycle')
+        return('COVID-19')
     else:
-        return('car')
+        return('Normal')
 #############################
 ######### FLASK APP #########
 
