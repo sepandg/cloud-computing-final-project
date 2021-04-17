@@ -10,34 +10,43 @@ import boto3
 s3 = boto3.resource('s3')
 s3_bucket_name = 'buckeyname'
 ## NN libraries (change based on what we end up using)
-import tensorflow as tf
-import matplotlib.pyplot as plt
-import cv2
+# import tensorflow as tf
+# import matplotlib.pyplot as plt
+# import cv2
+#
+# import numpy as np
+# from tensorflow.keras.preprocessing.image import ImageDataGenerator
+# from tensorflow.keras.preprocessing import image
+# from tensorflow.keras.optimizers import RMSprop
 
-import numpy as np
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.optimizers import RMSprop
+from PIL import Image
+from torchvision import transforms
+import pickle
+import torch
 
 ### laoding teh models
-json_file = open('model/model.json','r')
-loaded_model_json = json_file.read()
-json_file.close()
+#unpickle
 
-loaded_model = tf.keras.models.model_from_json(loaded_model_json)
+model = pickle.load(open('model/resnet_pickle.pkl', "rb"))
 
-loaded_model.load_weights("model/model.h5")
-
-def find_class(file_name):
-    img = image.load_img(file_name,target_size=(200,200))
-    X= image.img_to_array(img)
-    X=np.expand_dims(X,axis=0)
-    images = np.vstack([X])
-    val = loaded_model.predict(images)
-    if val ==0:
-        return('COVID-19')
-    else:
-        return('Normal')
+def find_class(file_name,model = model): #Feed in the image
+    class_names = ['Normal', 'Viral', 'COVID-19']
+    image = Image.open(file_name)
+    img_xray = image.convert('RGB')
+    preprocess = transforms.Compose([
+              transforms.Resize(256),
+              transforms.CenterCrop(224),
+              transforms.ToTensor(),
+              transforms.Normalize(
+              mean=[0.485, 0.456, 0.406],
+              std=[0.229, 0.224, 0.225]
+          )])
+    img_xray_preprocessed = preprocess(img_xray)
+    batch_image_xray_tensor = torch.unsqueeze(img_xray_preprocessed, 0)
+    model.eval()
+    out = model(batch_image_xray_tensor)
+    _, preds = torch.max(out, 1)
+    return class_names[int(preds)]
 #############################
 ######### FLASK APP #########
 
