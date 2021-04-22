@@ -8,7 +8,7 @@ from os.path import isfile, join
 import boto3
 
 s3 = boto3.resource('s3')
-s3_bucket_name = 'buckeyname'
+s3_bucket_name = 'group6clouddeeplearning'
 ## NN libraries (change based on what we end up using)
 # import tensorflow as tf
 # import matplotlib.pyplot as plt
@@ -92,7 +92,7 @@ def truth_page_link():
         return render_template('ground_truth.html', onlyfiles=onlyfiles,message=message)
     # elif (b != 'Class') & (a != 'Select The image'):
     elif (b != 'Select The image'):
-        # s3.meta.client.upload_file(f'static/uploads/{b}', s3_bucket_name, b)
+        s3.meta.client.upload_file(f'static/uploads/{b}', s3_bucket_name,f'{a}/{b}')
         os.remove(f'static/uploads/{b}')
         message = (f'{b} was successfully uplaoded to S3 {a} folder')
     return render_template('ground_truth.html', onlyfiles=onlyfiles,message=message)
@@ -127,6 +127,7 @@ def upload_form():
 	return render_template('upload.html')
 
 @app.route('/upload',methods = ["POST","GET"])
+@login_required
 def upload():
     target = 'static/uploads'
     print(target)
